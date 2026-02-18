@@ -23,6 +23,8 @@ node_modules/
 # Production
 /build
 /dist
+dist-ssr
+*.local
 
 # Logs
 npm-debug.log*
