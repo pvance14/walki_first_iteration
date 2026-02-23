@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import type { PersonaId } from '@/types';
 import { cn } from '@/lib/cn';
-import { PERSONA_COLOR_CLASS } from '@/lib/persona';
+import { PERSONA_HEX } from '@/lib/persona';
 
 type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'persona';
 
@@ -14,7 +14,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const baseButtonClass =
-  'inline-flex min-h-11 touch-manipulation items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60';
+  'inline-flex min-h-11 items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60';
 
 const variantClasses: Record<Exclude<ButtonVariant, 'persona'>, string> = {
   primary: 'bg-slate-900 text-white hover:bg-slate-800',
@@ -36,16 +36,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref,
   ) => {
-    const personaClass = persona ? PERSONA_COLOR_CLASS[persona] : PERSONA_COLOR_CLASS.sunny;
+    const personaColor = PERSONA_HEX[persona ?? 'sunny'];
 
     return (
       <button
         ref={ref}
-        className={cn(
-          baseButtonClass,
-          variant === 'persona' ? personaClass : variantClasses[variant],
-          className,
-        )}
+        className={cn(baseButtonClass, variant === 'persona' ? 'text-white' : variantClasses[variant], className)}
+        style={variant === 'persona' ? { backgroundColor: personaColor, borderColor: personaColor } : undefined}
         disabled={disabled || isLoading}
         {...props}
       >

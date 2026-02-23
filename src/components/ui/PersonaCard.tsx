@@ -1,6 +1,6 @@
 import type { Persona } from '@/types';
 import { cn } from '@/lib/cn';
-import { PERSONA_ACCENT_CLASS, PERSONA_BG_TINT_CLASS } from '@/lib/persona';
+import { PERSONA_HEX, PERSONA_ICON, PERSONA_INITIALS, PERSONA_TINT_HEX } from '@/lib/persona';
 
 type PersonaCardProps = {
   persona: Persona;
@@ -8,7 +8,8 @@ type PersonaCardProps = {
 };
 
 export const PersonaCard = ({ persona, onClick }: PersonaCardProps) => {
-  const accentClass = PERSONA_ACCENT_CLASS[persona.id];
+  const accentColor = PERSONA_HEX[persona.id];
+  const tintColor = PERSONA_TINT_HEX[persona.id];
 
   return (
     <button
@@ -16,12 +17,18 @@ export const PersonaCard = ({ persona, onClick }: PersonaCardProps) => {
       onClick={() => onClick?.(persona.id)}
       className={cn(
         'w-full rounded-xl border p-4 text-left transition duration-200 hover:-translate-y-1 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2',
-        accentClass,
-        PERSONA_BG_TINT_CLASS[persona.id],
       )}
+      style={{ borderColor: accentColor, backgroundColor: tintColor }}
     >
       <div className="mb-3 flex items-center gap-3">
-        <div className={cn('h-10 w-10 rounded-full border', accentClass, 'bg-white')} aria-hidden="true" />
+        <div
+          className="flex h-10 w-10 items-center justify-center rounded-full border text-lg"
+          style={{ borderColor: accentColor, backgroundColor: 'white' }}
+          aria-hidden="true"
+          title={persona.name}
+        >
+          <span>{PERSONA_ICON[persona.id] ?? PERSONA_INITIALS[persona.id]}</span>
+        </div>
         <div>
           <h3 className="text-base font-semibold text-slate-900">{persona.name}</h3>
           <p className="text-sm text-slate-600">{persona.title}</p>

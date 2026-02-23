@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import type { PersonaId } from '@/types';
 import { cn } from '@/lib/cn';
-import { PERSONA_COLOR_CLASS } from '@/lib/persona';
+import { PERSONA_HEX } from '@/lib/persona';
 
 type ProgressBarProps = {
   steps: number;
@@ -30,10 +30,9 @@ export const ProgressBar = ({ steps, goal, persona = 'sunny' }: ProgressBarProps
         <div
           className={cn(
             'h-full transition-[width] duration-500 ease-out motion-reduce:transition-none',
-            PERSONA_COLOR_CLASS[persona],
             isComplete && 'ring-2 ring-emerald-300',
           )}
-          style={{ width: `${progress}%` }}
+          style={{ width: `${progress}%`, backgroundColor: PERSONA_HEX[persona] }}
         />
       </div>
       {isComplete ? <p className="text-sm font-semibold text-emerald-700">Milestone reached!</p> : null}

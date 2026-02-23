@@ -1,41 +1,26 @@
 import type { Notification } from '@/types';
-import { PERSONA_ACCENT_CLASS, PERSONA_BG_TINT_CLASS } from '@/lib/persona';
-import { cn } from '@/lib/cn';
+import { PERSONA_HEX, PERSONA_ICON, PERSONA_INITIALS, PERSONA_TINT_HEX } from '@/lib/persona';
 
 type NotificationCardProps = {
   notification: Notification;
 };
 
-const initialsByPersona = {
-  sunny: 'SU',
-  'dr-quinn': 'DQ',
-  pep: 'PE',
-  rico: 'RI',
-  fern: 'FE',
-  rusty: 'RU',
-};
-
 export const NotificationCard = ({ notification }: NotificationCardProps) => {
-  const accentClass = PERSONA_ACCENT_CLASS[notification.personaId];
-  const bgTintClass = PERSONA_BG_TINT_CLASS[notification.personaId];
+  const accentColor = PERSONA_HEX[notification.personaId];
+  const tintColor = PERSONA_TINT_HEX[notification.personaId];
 
   return (
     <article
-      className={cn(
-        'rounded-xl border-l-4 border bg-white p-4 transition-shadow hover:shadow-md',
-        accentClass,
-      )}
+      className="rounded-xl border-l-4 bg-white p-4 transition-shadow hover:shadow-md"
+      style={{ borderLeftColor: accentColor, borderColor: '#E2E8F0' }}
     >
       <div className="flex items-start gap-3">
         <div
-          className={cn(
-            'inline-flex h-9 w-9 items-center justify-center rounded-full border text-xs font-bold',
-            accentClass,
-            bgTintClass,
-          )}
+          className="inline-flex h-9 w-9 items-center justify-center rounded-full border text-sm"
+          style={{ borderColor: accentColor, backgroundColor: tintColor }}
           aria-hidden="true"
         >
-          {initialsByPersona[notification.personaId]}
+          <span>{PERSONA_ICON[notification.personaId] ?? PERSONA_INITIALS[notification.personaId]}</span>
         </div>
         <div className="space-y-2">
           <p className="text-sm leading-relaxed text-slate-800">{notification.message}</p>
