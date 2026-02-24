@@ -49,15 +49,13 @@ const QuizIntroPage = () => {
             <p className="text-sm font-medium text-slate-700">10 questions, about 3 minutes, no wrong answers.</p>
           </div>
 
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap items-center justify-between gap-3">
             <Button type="button" onClick={handleStart}>
               {hasInProgressAnswers ? 'Continue Quiz' : 'Start Quiz'}
             </Button>
-            {hasInProgressAnswers ? (
-              <Button type="button" variant="secondary" onClick={handleRestart}>
-                Restart
-              </Button>
-            ) : null}
+            <Button type="button" variant="secondary" onClick={handleRestart}>
+              Restart Quiz
+            </Button>
           </div>
 
           <Link to="/" className="inline-flex text-sm font-medium text-slate-700 underline-offset-4 hover:underline">

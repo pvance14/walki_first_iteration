@@ -12,7 +12,12 @@ export const NotificationCard = ({ notification }: NotificationCardProps) => {
   return (
     <article
       className="rounded-xl border-l-4 bg-white p-4 transition-shadow hover:shadow-md"
-      style={{ borderLeftColor: accentColor, borderColor: '#E2E8F0' }}
+      style={{
+        borderLeftColor: accentColor,
+        borderColor: '#E2E8F0',
+        boxShadow: `-10px 0 20px -16px ${accentColor}, 0 10px 24px -20px ${accentColor}`,
+        backgroundImage: `linear-gradient(to right, ${accentColor}24 0, ${accentColor}10 14px, #ffffff 42px)`,
+      }}
     >
       <div className="flex items-start gap-3">
         <div
