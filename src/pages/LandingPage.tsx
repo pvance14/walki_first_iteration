@@ -5,6 +5,7 @@ import { SolutionSection } from '@/components/landing/SolutionSection';
 import { HowItWorksSection } from '@/components/landing/HowItWorksSection';
 import { PrivacySection } from '@/components/landing/PrivacySection';
 import { LandingFooter } from '@/components/landing/LandingFooter';
+import { WaitlistSection } from '@/components/waitlist/WaitlistSection';
 
 const LandingPage = () => {
   return (
@@ -16,6 +17,7 @@ const LandingPage = () => {
         <SolutionSection />
         <HowItWorksSection />
         <PrivacySection />
+        <WaitlistSection />
       </main>
       <LandingFooter />
     </div>
@@ -23,4 +25,3 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
-

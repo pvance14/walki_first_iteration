@@ -18,6 +18,7 @@ import { injectContext } from '@/utils/contextInjection';
 import { useDemoStore } from '@/store/demoStore';
 import { useQuizStore } from '@/store/quizStore';
 import { logger } from '@/lib/logger';
+import { trackMotivationClick } from '@/utils/analytics';
 import type { DayData, NotificationContext, PersonaId, Settings } from '@/types';
 
 const getPreferredTimeOfDay = (settings: Settings): NotificationContext['timeOfDay'] => {
@@ -139,6 +140,7 @@ export const DemoHome = () => {
       demoHomeLogger.debug('generate_motivation_ignored_in_progress');
       return;
     }
+    trackMotivationClick();
 
     const context = createNotificationContext(streak, currentSteps, dailyGoal, getPreferredTimeOfDay(settings));
     const template = selectNotification(NOTIFICATION_LIBRARY, context, personaWeights, recentTemplateIds);

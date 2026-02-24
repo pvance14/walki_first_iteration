@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui';
 
 export const LandingFooter = () => {
@@ -27,18 +27,18 @@ export const LandingFooter = () => {
 
         <div className="flex flex-col gap-4 border-t border-slate-700 pt-6 text-sm sm:flex-row sm:items-center sm:justify-between">
           <nav className="flex items-center gap-5" aria-label="Legal links">
-            <a
+            <Link
               className="inline-flex min-h-11 items-center text-slate-300 transition-colors duration-200 hover:text-white"
-              href="/terms-of-service"
+              to="/terms"
             >
               Terms of Service
-            </a>
-            <a
+            </Link>
+            <Link
               className="inline-flex min-h-11 items-center text-slate-300 transition-colors duration-200 hover:text-white"
-              href="/privacy-policy"
+              to="/privacy"
             >
               Privacy Policy
-            </a>
+            </Link>
           </nav>
           <p className="text-slate-400">© {currentYear} Walki. All rights reserved.</p>
         </div>

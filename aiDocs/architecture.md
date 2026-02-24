@@ -1023,6 +1023,27 @@ Each phase builds on the previous with clear deliverables:
 5. Mobile-first testing checkpoint
 6. Proceed to next phase only when complete
 
+### CLI Scripts
+
+To standardize local and AI-agent execution from terminal, use the shell scripts in `scripts/`:
+
+- `./scripts/dev.sh`: Starts Vite dev server (`npm run dev`)
+- `./scripts/build.sh`: Runs production build (`npm run build`)
+- `./scripts/run.sh`: Runs production preview server (`npm run preview`)
+- `./scripts/lint.sh`: Runs static checks (`npm run type-check` for now)
+- `./scripts/test.sh`: Runs unit tests (`npm run test:run`) and prints integration-test placeholder
+
+Script design rules:
+
+- Bash + `set -euo pipefail` for fail-fast behavior
+- Linear command flow, minimal branching
+- `echo` for each major step so logs are readable in CI/CLI output
+
+Current TODOs:
+
+- Add dedicated lint command (for example `npm run lint`) and update `scripts/lint.sh`
+- Add dedicated integration test command (for example `npm run test:integration`) and update `scripts/test.sh`
+
 ### Testing Strategy Per Phase
 
 **Phase 0-1:** Foundation testing
@@ -1154,4 +1175,4 @@ Static web demo, no backend
 | ------- | ------------ | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1.0     | Feb 17, 2026 | Preston Vance | Initial architecture documentation                                                                                                                                                                                                                                                                        |
 | 1.1     | Feb 18, 2026 | Preston Vance | Updated with detailed implementation decisions from 10-phase roadmap: confirmed tech stack (Shadcn/ui, Recharts, Zustand, Vitest), added implementation timeline, success metrics configuration, development workflow, testing strategy, mobile-first checkpoints, and deployment verification procedures |
-
+| 1.2     | Feb 24, 2026 | Codex         | Added CLI script standards and command mapping for `scripts/dev.sh`, `scripts/build.sh`, `scripts/run.sh`, `scripts/lint.sh`, and `scripts/test.sh`; documented current lint/integration test TODO defaults                                                                                             |

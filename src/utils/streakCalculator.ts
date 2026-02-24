@@ -1,5 +1,22 @@
 import type { DayData } from '@/types';
 
+function parseDayDate(dateValue: string): Date {
+  const dateOnlyMatch = dateValue.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+
+  if (dateOnlyMatch) {
+    const [, year, month, day] = dateOnlyMatch;
+    return new Date(Number(year), Number(month) - 1, Number(day));
+  }
+
+  return new Date(dateValue);
+}
+
+function toLocalMidnight(date: Date): Date {
+  const normalized = new Date(date);
+  normalized.setHours(0, 0, 0, 0);
+  return normalized;
+}
+
 /**
  * Calculate the current streak from calendar data
  * @param calendarData - Array of daily activity data (sorted by date, newest first)
@@ -10,17 +27,15 @@ export function calculateStreak(calendarData: DayData[]): number {
 
   // Sort calendar data by date (newest first)
   const sortedData = [...calendarData].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    (a, b) => parseDayDate(b.date).getTime() - parseDayDate(a.date).getTime()
   );
 
   let streak = 0;
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const today = toLocalMidnight(new Date());
 
   for (let i = 0; i < sortedData.length; i++) {
     const dayData = sortedData[i];
-    const dayDate = new Date(dayData.date);
-    dayDate.setHours(0, 0, 0, 0);
+    const dayDate = toLocalMidnight(parseDayDate(dayData.date));
 
     const expectedDate = new Date(today);
     expectedDate.setDate(expectedDate.getDate() - i);
@@ -54,7 +69,7 @@ export function calculateLongestStreak(calendarData: DayData[]): number {
 
   // Sort calendar data by date (oldest first)
   const sortedData = [...calendarData].sort(
-    (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    (a, b) => parseDayDate(a.date).getTime() - parseDayDate(b.date).getTime()
   );
 
   let longestStreak = 0;
@@ -62,8 +77,7 @@ export function calculateLongestStreak(calendarData: DayData[]): number {
   let previousDate: Date | null = null;
 
   for (const dayData of sortedData) {
-    const currentDate = new Date(dayData.date);
-    currentDate.setHours(0, 0, 0, 0);
+    const currentDate = toLocalMidnight(parseDayDate(dayData.date));
 
     // Check if this day is consecutive to the previous day
     if (previousDate !== null) {
@@ -114,8 +128,7 @@ export function isDateInStreak(date: Date, calendarData: DayData[]): boolean {
   const checkDate = new Date(date);
   checkDate.setHours(0, 0, 0, 0);
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const today = toLocalMidnight(new Date());
 
   const daysAgo = Math.floor((today.getTime() - checkDate.getTime()) / (1000 * 60 * 60 * 24));
 
@@ -131,8 +144,7 @@ export function getStreakStartDate(calendarData: DayData[]): Date | null {
   const streakLength = calculateStreak(calendarData);
   if (streakLength === 0) return null;
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const today = toLocalMidnight(new Date());
 
   const startDate = new Date(today);
   startDate.setDate(startDate.getDate() - (streakLength - 1));
@@ -151,7 +163,7 @@ export function hasUsedFreezeInStreak(calendarData: DayData[]): boolean {
 
   // Sort by date (newest first)
   const sortedData = [...calendarData].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    (a, b) => parseDayDate(b.date).getTime() - parseDayDate(a.date).getTime()
   );
 
   // Check the last 'streakLength' days

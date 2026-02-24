@@ -18,6 +18,7 @@ import { PERSONA_ICON } from '@/lib/persona';
 import { QUIZ_QUESTIONS } from '@/data/quizQuestions';
 import { useQuizStore } from '@/store/quizStore';
 import { logger } from '@/lib/logger';
+import { trackShare as trackAnalyticsShare } from '@/utils/analytics';
 import type { Notification } from '@/types';
 
 const QUIZ_QUESTION_COUNT = QUIZ_QUESTIONS.length;
@@ -75,7 +76,7 @@ const copyText = async (text: string) => {
   return success;
 };
 
-const trackShare = (method: 'web-share' | 'clipboard') => {
+const trackShareCount = (method: 'web-share' | 'clipboard') => {
   if (typeof window === 'undefined') {
     return;
   }
@@ -234,7 +235,8 @@ const QuizResultsPage = () => {
     try {
       if (typeof navigator !== 'undefined' && navigator.share) {
         await navigator.share(sharePayload);
-        trackShare('web-share');
+        trackShareCount('web-share');
+        trackAnalyticsShare('results', 'web-share');
         quizResultsLogger.info('quiz_results_shared', { method: 'web-share' });
         setShareStatus('shared');
         return;
@@ -242,7 +244,8 @@ const QuizResultsPage = () => {
 
       const copied = await copyText(shareText);
       if (copied) {
-        trackShare('clipboard');
+        trackShareCount('clipboard');
+        trackAnalyticsShare('results', 'clipboard');
         quizResultsLogger.info('quiz_results_shared', { method: 'clipboard' });
         setShareStatus('copied');
       } else {
@@ -257,7 +260,8 @@ const QuizResultsPage = () => {
 
       const copied = await copyText(shareText);
       if (copied) {
-        trackShare('clipboard');
+        trackShareCount('clipboard');
+        trackAnalyticsShare('results', 'clipboard');
         quizResultsLogger.warn('quiz_results_shared_after_error', { method: 'clipboard', error });
         setShareStatus('copied');
       } else {

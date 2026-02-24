@@ -5,6 +5,7 @@ import { Navigation } from '@/components/layout/Navigation';
 import { Button, Card, QuizProgress, QuizQuestion } from '@/components/ui';
 import { QUIZ_QUESTIONS } from '@/data/quizQuestions';
 import { useQuizStore } from '@/store/quizStore';
+import { trackQuizComplete } from '@/utils/analytics';
 
 const QUIZ_QUESTION_COUNT = QUIZ_QUESTIONS.length;
 
@@ -43,6 +44,7 @@ const QuizPage = () => {
     if (currentQuestionIndex >= totalQuestions - 1) {
       const results = completeQuiz(questions);
       if (results) {
+        trackQuizComplete(results.topPersona);
         navigate('/results');
       }
       return;
