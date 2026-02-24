@@ -772,7 +772,7 @@ Scale (thousands of users)
 #### Phase 1: Data Foundation (Days 2-3)
 
 - Define TypeScript interfaces per data models
-- Implement 7 quiz questions with scoring algorithm
+- Implement 10 quiz questions with scoring algorithm
 - Define 6 persona configurations with official names and colors
 - Generate 300 notification message templates (50 per persona)
 - Create demo data (18-day streak, 6,247/7,000 steps, 1 freeze, 1 missed day)
