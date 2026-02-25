@@ -1,5 +1,6 @@
 # AI Working Directory (local only, not shared)
-ai/
+# I would normally ignore this, but the instructions said we should commit it.
+# ai/
 
 # AI Agent Files (local only)
 claude.md
